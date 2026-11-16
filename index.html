@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <title>Quiet Square — Chess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Quiet Square home">
+          <span class="brand-mark" aria-hidden="true">♞</span>
+          <span>quiet<span class="brand-light">square</span></span>
+        </a>
+        <div class="topbar-note"><span class="live-dot"></span> A little room to think</div>
+        <button class="new-game-button" id="new-game-button" type="button"><span aria-hidden="true">＋</span> New game</button>
+      </header>
+
+      <main class="layout">
+        <section class="play-area" aria-label="Chess game">
+          <div class="game-heading">
+            <div>
+              <p class="eyebrow">YOUR BOARD</p>
+              <h1 id="game-title">A new beginning</h1>
+            </div>
+            <button class="icon-button rename-current" id="rename-current" type="button" aria-label="Rename current game" title="Rename game">✎</button>
+          </div>
+
+          <div class="player-card player-top" id="black-player">
+            <span class="player-avatar black-avatar" aria-hidden="true">♚</span>
+            <span class="player-name">Black</span>
+            <span class="player-state" id="black-state"></span>
+            <span class="player-captured" id="black-captured" aria-label="Black captured pieces"></span>
+          </div>
+
+          <div class="board-frame">
+            <div class="chessboard" id="chessboard" role="grid" aria-label="Chess board"></div>
+          </div>
+
+          <div class="player-card player-bottom" id="white-player">
+            <span class="player-avatar white-avatar" aria-hidden="true">♔</span>
+            <span class="player-name">White</span>
+            <span class="player-state" id="white-state"></span>
+            <span class="player-captured" id="white-captured" aria-label="White captured pieces"></span>
+          </div>
+
+          <div class="board-footer">
+            <span><span class="turn-dot" id="turn-dot"></span><span id="turn-label">White to move</span></span>
+            <span class="autosave-note"><span aria-hidden="true">✓</span> Saved automatically</span>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <div class="tab-bar" role="tablist" aria-label="Game panels">
+            <button class="tab-button active" id="moves-tab" type="button" role="tab" aria-selected="true" aria-controls="moves-panel">Moves <span class="tab-count" id="move-count">0</span></button>
+            <button class="tab-button" id="games-tab" type="button" role="tab" aria-selected="false" aria-controls="games-panel">Games <span class="tab-count" id="game-count">0</span></button>
+          </div>
+
+          <section class="tab-panel" id="moves-panel" role="tabpanel" aria-labelledby="moves-tab">
+            <div class="panel-heading">
+              <div><p class="eyebrow">THE STORY SO FAR</p><h2>Move history</h2></div>
+            </div>
+            <div class="move-list" id="move-list"></div>
+            <div class="panel-empty" id="moves-empty"><span class="empty-icon">♙</span><strong>The board is yours.</strong><span>Make the first move to begin.</span></div>
+            <div class="panel-footer"><span id="game-status">White to move</span><span class="status-indicator" id="status-indicator"></span></div>
+          </section>
+
+          <section class="tab-panel games-panel" id="games-panel" role="tabpanel" aria-labelledby="games-tab" hidden>
+            <div class="panel-heading">
+              <div><p class="eyebrow">YOUR COLLECTION</p><h2>Saved games</h2></div>
+            </div>
+            <div class="saved-games" id="saved-games"></div>
+            <div class="panel-empty" id="games-empty" hidden><span class="empty-icon">♙</span><strong>No saved games yet.</strong><span>Start a new game and it will appear here.</span></div>
+            <div class="panel-footer"><span>Stored on this device</span><span class="status-indicator"></span></div>
+          </section>
+        </aside>
+      </main>
+      <footer class="page-footer"><span>Take your time.</span><span>Made for the love of the game <span aria-hidden="true">♥</span></span></footer>
+    </div>
+    <dialog class="modal-dialog" id="name-dialog" aria-labelledby="name-dialog-title">
+      <form class="modal-card" id="name-form">
+        <p class="eyebrow">MAKE IT YOURS</p>
+        <h2 id="name-dialog-title">Name your game</h2>
+        <label class="modal-label" for="game-name-input">Game name</label>
+        <input id="game-name-input" name="gameName" maxlength="60" autocomplete="off" required>
+        <div class="modal-actions">
+          <button class="modal-cancel" id="name-cancel" type="button">Cancel</button>
+          <button class="modal-submit" id="name-submit" type="submit">Save name</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="modal-dialog promotion-dialog" id="promotion-dialog" aria-labelledby="promotion-title">
+      <div class="modal-card">
+        <p class="eyebrow">A PAWN'S NEXT CHAPTER</p>
+        <h2 id="promotion-title">Choose a piece</h2>
+        <div class="promotion-choices" id="promotion-choices"></div>
+        <button class="modal-cancel promotion-cancel" id="promotion-cancel" type="button">Cancel move</button>
+      </div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
